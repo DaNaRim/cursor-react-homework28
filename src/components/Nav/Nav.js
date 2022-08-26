@@ -6,9 +6,10 @@ const Nav = () => {
   return (
     <NavWrapper>
       <ul>
-        {/*<li><NavLink to="/" exact={true}>Home</NavLink></li>*/}
         <li><NavLink to="/users">Users</NavLink></li>
         <li><NavLink to="/addUser">Add user</NavLink></li>
+        <li><NavLink to="/news">News</NavLink></li>
+        <li><NavLink to="/addNews">Add news</NavLink></li>
       </ul>
     </NavWrapper>
   )

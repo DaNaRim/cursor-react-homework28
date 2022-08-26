@@ -15,7 +15,8 @@ const UsersPage = () => {
   return (
     <DefaultPageWrapper>
       <UserPageStyles>
-        {users === null && <h2 className="error">Fail to load users</h2>}
+        {users === null && <div>Fail to load users</div>}
+        {users && !users.length && <div>No users</div>}
         {users && users.map(user => <User user={user} key={user.id}/>)}
       </UserPageStyles>
     </DefaultPageWrapper>

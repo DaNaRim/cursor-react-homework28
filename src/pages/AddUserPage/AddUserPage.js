@@ -18,6 +18,9 @@ const AddUserPage = () => {
     }
     dispatch(addUserAction(user))
 
+    setUsername("")
+    setLinkToImage("")
+
     alert("User added")
   }
 
@@ -25,8 +28,11 @@ const AddUserPage = () => {
     <DefaultPageWrapper>
       <AddUserPageStyles>
         <form>
-          <input type="text" placeholder="Username" onChange={e => setUsername(e.target.value)}/>
-          <input type="text" placeholder="Link to image" onChange={e => setLinkToImage(e.target.value)}/>
+          <input type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)}/>
+          <input type="text"
+                 placeholder="Link to image"
+                 value={linkToImage}
+                 onChange={e => setLinkToImage(e.target.value)}/>
 
           <button onClick={handleAddUser}>Add user</button>
         </form>

@@ -1,12 +1,12 @@
 import styled from "styled-components"
 
-const AddUserPageStyles = styled.div`
-  
+const AddNewsPageStyles = styled.div`
+
   h1 {
     text-align: center;
     margin-top: 1rem;
   }
-  
+
   form {
     display: flex;
     flex-direction: column;
@@ -18,4 +18,4 @@ const AddUserPageStyles = styled.div`
   }
 `
 
-export default AddUserPageStyles
+export default AddNewsPageStyles
