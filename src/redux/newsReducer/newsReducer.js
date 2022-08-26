@@ -1,4 +1,4 @@
-import {ADD_NEWS, GET_NEWS, GET_NEWS_FAIL} from "./newsActionsTypes"
+import {ADD_NEWS, GET_NEWS, GET_NEWS_FAIL, UPDATE_NEWS} from "./newsActionsTypes"
 
 const initialState = {
   news: undefined
@@ -14,6 +14,8 @@ const newsReducer = (state = initialState, action) => {
       return {state, news: null}
     case ADD_NEWS:
       return {state, news: [...state.news, payload.newNews]}
+    case UPDATE_NEWS:
+      return {state, news: state.news.map(item => item.id === payload.newNews.id ? payload.newNews : item)}
     default:
       return state
   }

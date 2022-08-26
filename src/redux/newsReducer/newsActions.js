@@ -1,4 +1,4 @@
-import {ADD_NEWS, ADD_NEWS_FAIL, GET_NEWS, GET_NEWS_FAIL} from "./newsActionsTypes"
+import {ADD_NEWS, ADD_NEWS_FAIL, GET_NEWS, GET_NEWS_FAIL, UPDATE_NEWS, UPDATE_NEWS_FAIL} from "./newsActionsTypes"
 
 export const getNewsAction = () => {
   return async dispatch => {
@@ -29,6 +29,26 @@ export const addNewsAction = (news) => {
       dispatch({type: ADD_NEWS, payload: {newNews}})
     } catch (error) {
       dispatch({type: ADD_NEWS_FAIL, payload: {error}})
+    }
+  }
+}
+
+export const updateNewsAction = (news) => {
+  return async dispatch => {
+    try {
+      const request = await fetch("http://localhost:8080/news", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(news)
+      })
+
+      const newNews = await request.json()
+
+      dispatch({type: UPDATE_NEWS, payload: {newNews}})
+    } catch (error) {
+      dispatch({type: UPDATE_NEWS_FAIL, payload: {error}})
     }
   }
 }

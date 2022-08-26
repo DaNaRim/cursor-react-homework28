@@ -5,6 +5,7 @@ import {GlobalStyle} from "./GlobalStyles"
 import AddNewsPage from "./pages/AddNewsPage/AddNewsPage"
 import AddUserPage from "./pages/AddUserPage/AddUserPage"
 import NewsPage from "./pages/NewsPage/NewsPage"
+import UpdateNewsPage from "./pages/UpdateNewsPage/UpdateNewsPage"
 import UsersPage from "./pages/UsersPage/UsersPage"
 import {darkTheme} from "./theme/themes"
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/users" exact element={<UsersPage/>}/>
         <Route path="/addUser" exact element={<AddUserPage/>}/>
         <Route path="/news" exact element={<NewsPage/>}/>
+        <Route path="/news/:id" exact element={<UpdateNewsPage/>}/>
         <Route path="/addNews" exact element={<AddNewsPage/>}/>
       </Routes>
     </ThemeProvider>

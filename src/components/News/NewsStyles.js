@@ -16,6 +16,11 @@ const NewsStyles = styled.div`
   
   & > h1 {
     font-size: 1.5rem;
+    
+    & > a {
+      text-decoration: none;
+      color: inherit;
+    }
   }
   
   & > img {
