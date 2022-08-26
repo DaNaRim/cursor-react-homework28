@@ -9,7 +9,7 @@ const newsReducer = (state = initialState, action) => {
 
   switch (type) {
     case GET_NEWS:
-      return {state, news: payload.news.sort((a, b) => b.dateCreated - a.dateCreated)}
+      return {state, news: payload.news.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated))}
     case GET_NEWS_FAIL:
       return {state, news: null}
     case ADD_NEWS:
