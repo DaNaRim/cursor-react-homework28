@@ -6,6 +6,8 @@ export const getNewsAction = () => {
       const request = await fetch("http://localhost:8080/news")
       const news = await request.json()
 
+      news.forEach(user => !user.id ? user.id = user._id : null)
+
       dispatch({type: GET_NEWS, payload: {news}})
     } catch (error) {
       dispatch({type: GET_NEWS_FAIL, payload: {error}})
@@ -26,6 +28,8 @@ export const addNewsAction = (news) => {
 
       const newNews = await request.json()
 
+      if (!newNews.id) newNews.id = newNews._id
+
       dispatch({type: ADD_NEWS, payload: {newNews}})
     } catch (error) {
       dispatch({type: ADD_NEWS_FAIL, payload: {error}})
@@ -45,6 +49,10 @@ export const updateNewsAction = (news) => {
       })
 
       const newNews = await request.json()
+
+      console.log(newNews)
+
+      if (!newNews.id) newNews.id = newNews._id
 
       dispatch({type: UPDATE_NEWS, payload: {newNews}})
     } catch (error) {

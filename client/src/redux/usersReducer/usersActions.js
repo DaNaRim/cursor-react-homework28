@@ -6,6 +6,8 @@ export const getUsersAction = () => {
       const request = await fetch("http://localhost:8080/users")
       const users = await request.json()
 
+      users.forEach(user => !user.id ? user.id = user._id : null)
+
       dispatch({type: GET_USERS, payload: {users}})
     } catch (error) {
       dispatch({type: GET_USERS_FAIL, payload: {error}})
@@ -25,6 +27,8 @@ export const addUserAction = (user) => {
       })
 
       const newUser = await request.json()
+
+      if (!newUser.id) newUser.id = newUser._id
 
       dispatch({type: ADD_USER, payload: {newUser}})
     } catch (error) {

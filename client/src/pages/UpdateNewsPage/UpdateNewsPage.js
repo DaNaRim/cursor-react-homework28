@@ -10,7 +10,8 @@ const UpdateNewsPage = () => {
 
   const news = useSelector(getNews, () => true)
 
-  const currentNews = news.find(item => item.id === +window.location.pathname.split("/")[2])
+  // FIXME probably bug with comparing number and string
+  const currentNews = news.find(item => item.id === window.location.pathname.split("/")[2])
 
   const [title, setTitle] = React.useState(currentNews.title)
   const [text, setText] = React.useState(currentNews.text)
