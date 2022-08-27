@@ -6,11 +6,10 @@ import {getNewsImagesDataList} from "../AddNewsPage/AddNewsPage"
 import DefaultPageWrapper from "../DefaultPageWrapper/DefaultPageWrapper"
 import UpdateNewsPageStyles from "./UpdateNewsPageStyles"
 
-const path = window.location.pathname.split("/")[2]
-
 const UpdateNewsPage = () => {
-  const dispatch = useDispatch()
+  const path = window.location.pathname.split("/")[2]
 
+  const dispatch = useDispatch()
   const news = useSelector(getNews)
 
   let [currentNews, setCurrentNews] = useState({
@@ -19,9 +18,9 @@ const UpdateNewsPage = () => {
     imageLink: "",
   })
 
-  const [title, setTitle] = React.useState(currentNews.title)
-  const [text, setText] = React.useState(currentNews.text)
-  const [imageLink, setImageLink] = React.useState(currentNews.imageLink)
+  const [title, setTitle] = useState(currentNews.title)
+  const [text, setText] = useState(currentNews.text)
+  const [imageLink, setImageLink] = useState(currentNews.imageLink)
 
   useEffect(() => {
     if (!news) return
