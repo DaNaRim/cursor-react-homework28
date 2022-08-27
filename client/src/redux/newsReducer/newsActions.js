@@ -50,8 +50,6 @@ export const updateNewsAction = (news) => {
 
       const newNews = await request.json()
 
-      console.log(newNews)
-
       if (!newNews.id) newNews.id = newNews._id
 
       dispatch({type: UPDATE_NEWS, payload: {newNews}})

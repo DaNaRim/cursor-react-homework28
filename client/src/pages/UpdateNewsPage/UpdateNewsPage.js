@@ -31,7 +31,7 @@ const UpdateNewsPage = () => {
     setTitle(currentNews.title)
     setText(currentNews.text)
     setImageLink(currentNews.imageLink)
-  }, [currentNews, news])
+  }, [currentNews, news, path])
 
   const handleSubmit = e => {
     e.preventDefault()
