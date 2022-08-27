@@ -60,7 +60,13 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  html, body, #root, main {
+  html, body {
     height: 100%;
+    overflow: overlay;
+  }
+
+  #root, main {
+    min-height: inherit;
+    height: inherit;
   }
 `

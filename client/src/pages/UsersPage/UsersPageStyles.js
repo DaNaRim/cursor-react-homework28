@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const NewsPageStyles = styled.div`
+const UsersPageStyles = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -14,4 +14,4 @@ const NewsPageStyles = styled.div`
   }
 `
 
-export default NewsPageStyles
+export default UsersPageStyles

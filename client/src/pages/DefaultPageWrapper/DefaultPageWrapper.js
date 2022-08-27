@@ -1,12 +1,13 @@
 import React from "react"
 import Nav from "../../components/Nav/Nav"
+import DefaultPageWrapperStyles from "./DefaultPageWrapperStyles"
 
 const DefaultPageWrapper = (props) => {
   return (
-    <main>
+    <DefaultPageWrapperStyles>
       <Nav/>
       {props.children}
-    </main>
+    </DefaultPageWrapperStyles>
   )
 }
 

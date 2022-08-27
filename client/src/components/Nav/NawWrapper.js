@@ -1,18 +1,15 @@
 import styled from "styled-components"
 
-export const NavWrapper = styled.div.attrs(() => ({
-  id: "nav"
+export const NavWrapper = styled.nav.attrs(() => ({
+  id: "main_nav",
 }))`
 
-  width: 100%;
-  height: fit-content !important;
-
-  background-color: ${({theme}) => theme.$backgroundColors.$primary};
-  padding: 2rem;
-  
   display: flex;
+  align-items: center;
   justify-content: center;
-  
+  padding: 1rem;
+  background-color: ${({theme}) => theme.$backgroundColors.$primary};
+
   ul {
     display: flex;
     flex-wrap: nowrap;

@@ -10,9 +10,9 @@ const News = (data) => {
       <h1>
         <Link to={`/news/${id}`}>{title}</Link>
       </h1>
-      <p>{text}</p>
+      <p className="text">{text}</p>
       {imageLink && <img src={imageLink} alt=""/>}
-      <p>{formatDate(dateCreated)}</p>
+      <p className="date">{formatDate(dateCreated)}</p>
     </NewsStyles>
   )
 }

@@ -2,30 +2,47 @@ import styled from "styled-components"
 
 const NewsStyles = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   width: 20rem;
-  background-color: greenyellow;
-  margin-top: 1rem;
 
-  padding: 1rem;
-  
+  padding: ${({theme}) => theme.$paddings.$primary};
+  border-radius: ${({theme}) => theme.$borderRadius.$primary};
+  background: ${({theme}) => theme.$backgroundColors.$tertiary};
+  box-shadow: ${({theme}) => theme.$boxShadows.$primary};
+
   & > * {
-    margin-top: 1rem;
+    margin-top: ${({theme}) => theme.$margins.$innerBlock};
+    color: ${({theme}) => theme.$textColors.$secondary};
+
+    &:first-child {
+      margin-top: 0;
+    }
   }
-  
-  & > h1 {
-    font-size: 1.5rem;
-    
-    & > a {
+
+  h1 {
+    font-size: ${({theme}) => theme.$fontsSize.$h1};
+
+    a {
       text-decoration: none;
       color: inherit;
     }
   }
-  
-  & > img {
-    width: 16rem;
-    height: 8rem;
+
+  .text {
+    font-size: ${({theme}) => theme.$fontsSize.$secondary};
+    word-break: break-all;
+  }
+
+  .date {
+    font-size: ${({theme}) => theme.$fontsSize.$secondary};
+    color: ${({theme}) => theme.$textColors.$tertiary};
+  }
+
+  img {
+    width: 100%;
+    height: 10rem;
+    border-radius: ${({theme}) => theme.$borderRadius.$secondary};
     object-fit: cover;
   }
 `

@@ -1,24 +1,32 @@
 import styled from "styled-components"
 
+const $imageSize = "3.5rem"
+
 const UserStyles = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-
-  width: 10rem;
-  height: 5rem;
-  background-color: red;
+  width: 20rem;
+  min-height: 6rem;
+  padding: ${({theme}) => theme.$paddings.$primary};
+  border-radius: ${({theme}) => theme.$borderRadius.$primary};
+  background: ${({theme}) => theme.$backgroundColors.$tertiary};
+  box-shadow: ${({theme}) => theme.$boxShadows.$primary};
 
   img {
     position: absolute;
-    margin-left: 0.5rem;
-    width: 2rem;
-    height: 2rem;
+    width: ${$imageSize};
+    height: ${$imageSize};
+    border-radius: 100%;
     object-fit: cover;
   }
-  
+
   h2 {
-    margin-left: 3rem;
+    font-size: ${({theme}) => theme.$fontsSize.$h2};
+    margin-left: ${`calc(${$imageSize} + 1rem)`};
+    text-transform: capitalize;
+    word-break: break-all;
+    color: ${({theme}) => theme.$textColors.$secondary}
   }
 `
 

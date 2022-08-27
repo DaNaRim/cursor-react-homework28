@@ -5,7 +5,7 @@ import {store} from "../../redux/store"
 import {getUsersAction} from "../../redux/usersReducer/usersActions"
 import {usersSelector} from "../../redux/usersReducer/userSelectors"
 import DefaultPageWrapper from "../DefaultPageWrapper/DefaultPageWrapper"
-import UserPageStyles from "./UserPageStyles"
+import UsersPageStyles from "./UsersPageStyles"
 
 store.dispatch(getUsersAction())
 
@@ -14,11 +14,11 @@ const UsersPage = () => {
 
   return (
     <DefaultPageWrapper>
-      <UserPageStyles>
+      <UsersPageStyles>
         {users === null && <div>Fail to load users</div>}
         {users && !users.length && <div>No users</div>}
         {users && users.map(user => <User user={user} key={user.id}/>)}
-      </UserPageStyles>
+      </UsersPageStyles>
     </DefaultPageWrapper>
   )
 }
