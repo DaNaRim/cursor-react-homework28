@@ -19,7 +19,7 @@ export const darkTheme = {
     $primary: "#fff",
     $secondary: "#000036",
     $link: "#90caf9",
-    $error: "#ff5252",
+    $error: "#a00",
   },
 
   $margins: {

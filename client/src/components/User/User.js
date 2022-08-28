@@ -1,4 +1,3 @@
-import React from "react"
 import UserStyles from "./UserStyles"
 
 const User = (data) => {

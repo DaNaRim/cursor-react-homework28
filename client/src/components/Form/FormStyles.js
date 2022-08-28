@@ -11,9 +11,29 @@ const FormStyles = styled.form`
   background: ${({theme}) => theme.$backgroundColors.$tertiary};
   box-shadow: ${({theme}) => theme.$boxShadows.$primary};
 
+  & > * {
+    margin-top: ${({theme}) => theme.$margins.$innerBlock};
+    color: ${({theme}) => theme.$textColors.$secondary};
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  
   h1 {
     font-size: ${({theme}) => theme.$fontsSize.$h1};
     color: ${({theme}) => theme.$textColors.$secondary};
+  }
+  
+  & > div {
+    width: 100%;
+    
+    .error {
+      text-align: center;
+      margin-top: ${({theme}) => `calc(${theme.$margins.$innerBlock} / 2)`};
+      color: ${({theme}) => theme.$textColors.$error};
+      font-size: ${({theme}) => theme.$fontsSize.$secondary};
+    }
   }
 
   input, button {
@@ -31,15 +51,6 @@ const FormStyles = styled.form`
 
   button:hover {
     background-color: ${({theme}) => darken(0.1, theme.$backgroundColors.$quaternary)};
-  }
-
-  & > * {
-    margin-top: ${({theme}) => theme.$margins.$innerBlock};
-    color: ${({theme}) => theme.$textColors.$secondary};
-
-    &:first-child {
-      margin-top: 0;
-    }
   }
 `
 

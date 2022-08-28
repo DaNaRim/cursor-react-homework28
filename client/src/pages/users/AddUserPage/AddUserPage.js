@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import FormStyles from "../../../components/Form/FormStyles"
 import InfoBlockStyles from "../../../components/InfoBlock/InfoBlockStyles"
@@ -12,8 +12,11 @@ const AddUserPage = () => {
 
   const {status, error} = useSelector(addUserSelector)
 
-  const [username, setUsername] = React.useState("")
-  const [linkToImage, setLinkToImage] = React.useState("")
+  const [username, setUsername] = useState("")
+  const [linkToImage, setLinkToImage] = useState("")
+
+  const [errors, setErrors] = useState({})
+  const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
     if (status === "success") {
@@ -29,11 +32,28 @@ const AddUserPage = () => {
 
   const handleAddUser = e => {
     e.preventDefault()
+
+    setSubmitted(true)
+    if (validateForm()) return
+
     const user = {
       username,
       linkToImage,
     }
     dispatch(addUserAction(user))
+  }
+
+  /**
+   * @returns {boolean} - true if form is invalid, false otherwise
+   */
+  const validateForm = () => {
+    const errors = {}
+
+    if (username === "") errors.username = "Username is required"
+    // if (linkToImage === "") errors.linkToImage = "Link to image is required"
+
+    setErrors(errors)
+    return Object.keys(errors).length !== 0
   }
 
   return (
@@ -48,21 +68,28 @@ const AddUserPage = () => {
         </InfoBlockStyles>
         <FormStyles>
           <h1>Create new user</h1>
-          <input type="text"
-                 placeholder="Username"
-                 title="Username"
-                 required
-                 value={username}
-                 onChange={e => setUsername(e.target.value)}/>
-          <input type="url"
-                 placeholder="Link to image"
-                 title="Link To Image"
-                 required
-                 list="LinksToImage"
-                 value={linkToImage}
-                 onChange={e => setLinkToImage(e.target.value)}/>
-          {getUserImagesDatalist()}
+          <div>
+            <input type="text"
+                   placeholder="Username"
+                   title="Username"
+                   required
+                   value={username}
+                   onChange={e => setUsername(e.target.value)}/>
 
+            {submitted && errors.username && <div className="error">{errors.username}</div>}
+          </div>
+          <div>
+            <input type="url"
+                   placeholder="Link to image"
+                   title="Link To Image"
+                   required
+                   list="LinksToImage"
+                   value={linkToImage}
+                   onChange={e => setLinkToImage(e.target.value)}/>
+
+            {submitted && errors.linkToImage && <div className="error">{errors.linkToImage}</div>}
+            {getUserImagesDatalist()}
+          </div>
           <button onClick={handleAddUser}>Add user</button>
         </FormStyles>
       </AddUserPageStyles>

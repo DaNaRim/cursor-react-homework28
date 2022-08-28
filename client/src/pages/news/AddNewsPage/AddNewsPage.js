@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import FormStyles from "../../../components/Form/FormStyles"
 import InfoBlockStyles from "../../../components/InfoBlock/InfoBlockStyles"
@@ -10,11 +10,14 @@ import AddNewsPageStyles from "./AddNewsPageStyles"
 const AddNewsPage = () => {
   const dispatch = useDispatch()
 
-  const [title, setTitle] = React.useState("")
-  const [text, setText] = React.useState("")
-  const [imageLink, setImageLink] = React.useState("")
+  const [title, setTitle] = useState("")
+  const [text, setText] = useState("")
+  const [imageLink, setImageLink] = useState("")
 
   const {status, error} = useSelector(addNewsSelector)
+
+  const [errors, setErrors] = useState({})
+  const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
     if (status === "success") {
@@ -31,12 +34,30 @@ const AddNewsPage = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
+
+    setSubmitted(true)
+    if (validateForm()) return
+
     const news = {
       title,
       text,
       imageLink,
     }
     dispatch(addNewsAction(news))
+  }
+
+  /**
+   * @returns {boolean} - true if form is invalid, false otherwise
+   */
+  const validateForm = () => {
+    const errors = {}
+
+    if (title === "") errors.title = "Title is required"
+    if (text === "") errors.text = "Text is required"
+    // if (imageLink === "") errors.imageLink = "Image link is required"
+
+    setErrors(errors)
+    return Object.keys(errors).length !== 0
   }
 
   return (
@@ -51,27 +72,38 @@ const AddNewsPage = () => {
         </InfoBlockStyles>
         <FormStyles>
           <h1>Add news</h1>
-          <input type="text"
-                 placeholder="title"
-                 title="Title"
-                 required
-                 value={title}
-                 onChange={e => setTitle(e.target.value)}/>
-          <input type="text"
-                 placeholder="text"
-                 title="Text"
-                 required
-                 value={text}
-                 onChange={e => setText(e.target.value)}/>
-          <input type="text"
-                 placeholder="imageLink"
-                 title="Image link"
-                 required
-                 list="LinksToImage"
-                 value={imageLink}
-                 onChange={e => setImageLink(e.target.value)}/>
-          {getNewsImagesDataList()}
+          <div>
+            <input type="text"
+                   placeholder="title"
+                   title="Title"
+                   required
+                   value={title}
+                   onChange={e => setTitle(e.target.value)}/>
 
+            {submitted && errors.title && <div className="error">{errors.title}</div>}
+          </div>
+          <div>
+            <input type="text"
+                   placeholder="text"
+                   title="Text"
+                   required
+                   value={text}
+                   onChange={e => setText(e.target.value)}/>
+
+            {submitted && errors.text && <div className="error">{errors.text}</div>}
+          </div>
+          <div>
+            <input type="text"
+                   placeholder="imageLink"
+                   title="Image link"
+                   required
+                   list="LinksToImage"
+                   value={imageLink}
+                   onChange={e => setImageLink(e.target.value)}/>
+
+            {submitted && errors.imageLink && <div className="error">{errors.imageLink}</div>}
+            {getNewsImagesDataList()}
+          </div>
           <button type="submit" onClick={handleSubmit}>Add news</button>
         </FormStyles>
       </AddNewsPageStyles>
