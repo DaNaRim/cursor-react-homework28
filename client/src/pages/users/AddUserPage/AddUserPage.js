@@ -1,8 +1,8 @@
 import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {addUserAction, pendingAddUserAction} from "../../redux/usersReducer/usersActions"
-import {addUserSelector} from "../../redux/usersReducer/usersSelectors"
-import DefaultPageWrapper from "../DefaultPageWrapper/DefaultPageWrapper"
+import {addUserAction, pendingAddUserAction} from "../../../redux/usersReducer/usersActions"
+import {addUserSelector} from "../../../redux/usersReducer/usersSelectors"
+import DefaultPageWrapper from "../../DefaultPageWrapper/DefaultPageWrapper"
 import AddUserPageStyles from "./AddUserPageStyles"
 
 const AddUserPage = () => {

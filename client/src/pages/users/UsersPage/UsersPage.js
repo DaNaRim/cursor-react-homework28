@@ -1,9 +1,9 @@
 import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import User from "../../components/User/User"
-import {getUsersAction} from "../../redux/usersReducer/usersActions"
-import {getUsersSelector, usersSelector} from "../../redux/usersReducer/usersSelectors"
-import DefaultPageWrapper from "../DefaultPageWrapper/DefaultPageWrapper"
+import User from "../../../components/User/User"
+import {getUsersAction} from "../../../redux/usersReducer/usersActions"
+import {getUsersSelector, usersSelector} from "../../../redux/usersReducer/usersSelectors"
+import DefaultPageWrapper from "../../DefaultPageWrapper/DefaultPageWrapper"
 import UsersPageStyles from "./UsersPageStyles"
 
 const UsersPage = () => {
