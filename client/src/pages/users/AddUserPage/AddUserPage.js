@@ -1,6 +1,7 @@
 import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import FormStyles from "../../../components/Form/FormStyles"
+import InfoBlockStyles from "../../../components/InfoBlock/InfoBlockStyles"
 import {addUserAction, pendingAddUserAction} from "../../../redux/usersReducer/usersActions"
 import {addUserSelector} from "../../../redux/usersReducer/usersSelectors"
 import DefaultPageWrapper from "../../DefaultPageWrapper/DefaultPageWrapper"
@@ -38,11 +39,13 @@ const AddUserPage = () => {
   return (
     <DefaultPageWrapper>
       <AddUserPageStyles>
-        {status === "loading" && <div className="info_block loading">Adding user...</div>}
-        {status === "success" && <div className="info_block">User added</div>}
-        {status === "error"
-          && <div className="info_block error">Failed to add new user: <span>{error.message}</span></div>
-        }
+        <InfoBlockStyles>
+          {status === "loading" && <div className="info_block loading">Adding user...</div>}
+          {status === "success" && <div className="info_block">User added</div>}
+          {status === "error"
+            && <div className="info_block error">Failed to add new user: <span>{error.message}</span></div>
+          }
+        </InfoBlockStyles>
         <FormStyles>
           <h1>Create new user</h1>
           <input type="text"

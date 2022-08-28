@@ -1,6 +1,7 @@
 import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import FormStyles from "../../../components/Form/FormStyles"
+import InfoBlockStyles from "../../../components/InfoBlock/InfoBlockStyles"
 import {addNewsAction, pendingAddNewsAction} from "../../../redux/newsReducer/newsActions"
 import {addNewsSelector} from "../../../redux/newsReducer/newsSelectors"
 import DefaultPageWrapper from "../../DefaultPageWrapper/DefaultPageWrapper"
@@ -41,11 +42,13 @@ const AddNewsPage = () => {
   return (
     <DefaultPageWrapper>
       <AddNewsPageStyles>
-        {status === "loading" && <div className="info_block loading">Adding news...</div>}
-        {status === "success" && <div className="info_block">News added</div>}
-        {status === "error"
-          && <div className="info_block error">Failed to add new news: <span>{error.message}</span></div>
-        }
+        <InfoBlockStyles>
+          {status === "loading" && <div className="info_block loading">Adding news...</div>}
+          {status === "success" && <div className="info_block">News added</div>}
+          {status === "error"
+            && <div className="info_block error">Failed to add new news: <span>{error.message}</span></div>
+          }
+        </InfoBlockStyles>
         <FormStyles>
           <h1>Add news</h1>
           <input type="text"
