@@ -1,38 +1,39 @@
-import {ADD_USER, ADD_USER_FAIL, GET_USERS, GET_USERS_FAIL} from "./usersActionTypes"
+import axios from "axios"
+import {SERVER_URL} from "../../axiosConfig"
+import {
+  ADD_USER,
+  ADD_USER_FAIL,
+  ADD_USER_SUCCESS,
+  GET_USERS,
+  GET_USERS_FAIL,
+  GET_USERS_SUCCESS,
+  PENDING_ADD_USER,
+} from "./usersActionTypes"
 
-export const getUsersAction = () => {
-  return async dispatch => {
-    try {
-      const request = await fetch("http://localhost:8080/users")
-      const users = await request.json()
+export const getUsersAction = () => (dispatch, getState) => {
+  if (getState().usersReducer.users) return
 
-      users.forEach(user => !user.id ? user.id = user._id : null)
+  dispatch({type: GET_USERS})
 
-      dispatch({type: GET_USERS, payload: {users}})
-    } catch (error) {
-      dispatch({type: GET_USERS_FAIL, payload: {error}})
-    }
-  }
+  axios.get(`${SERVER_URL}/users`)
+       .then(({data}) => ({data: data.map(user => !user.id ? {...user, id: user._id} : user)}))
+       .then(({data}) => dispatch(({type: GET_USERS_SUCCESS, payload: {users: data}})))
+       .catch((error) => dispatch(({type: GET_USERS_FAIL, payload: {error}})))
 }
 
-export const addUserAction = (user) => {
-  return async dispatch => {
-    try {
-      const request = await fetch("http://localhost:8080/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user)
-      })
+export const pendingAddUserAction = () => ({type: PENDING_ADD_USER})
 
-      const newUser = await request.json()
+export const addUserAction = (user) => (dispatch, getState) => {
+  dispatch({type: ADD_USER})
 
-      if (!newUser.id) newUser.id = newUser._id
+  if (!getState().usersReducer.users) dispatch(getUsersAction())
 
-      dispatch({type: ADD_USER, payload: {newUser}})
-    } catch (error) {
-      dispatch({type: ADD_USER_FAIL, payload: {error}})
-    }
-  }
+  axios.post(`${SERVER_URL}/users`, user, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+       .then(({data}) => ({data: {...data, id: data._id}}))
+       .then(({data}) => dispatch(({type: ADD_USER_SUCCESS, payload: {newUser: data}})))
+       .catch((error) => dispatch(({type: ADD_USER_FAIL, payload: {error}})))
 }

@@ -1,14 +1,29 @@
-import React from "react"
-import {useDispatch} from "react-redux"
-import {addUserAction} from "../../redux/usersReducer/usersActions"
+import React, {useEffect} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {addUserAction, pendingAddUserAction} from "../../redux/usersReducer/usersActions"
+import {addUserSelector} from "../../redux/usersReducer/usersSelectors"
 import DefaultPageWrapper from "../DefaultPageWrapper/DefaultPageWrapper"
 import AddUserPageStyles from "./AddUserPageStyles"
 
 const AddUserPage = () => {
   const dispatch = useDispatch()
 
+  const {status, error} = useSelector(addUserSelector)
+
   const [username, setUsername] = React.useState("")
   const [linkToImage, setLinkToImage] = React.useState("")
+
+  useEffect(() => {
+    if (status === "success") {
+      setUsername("")
+      setLinkToImage("")
+
+      setTimeout(() => {
+        dispatch(pendingAddUserAction())
+      }, 2000)
+    }
+  }, [dispatch, status])
+
 
   const handleAddUser = e => {
     e.preventDefault()
@@ -17,16 +32,16 @@ const AddUserPage = () => {
       linkToImage,
     }
     dispatch(addUserAction(user))
-
-    setUsername("")
-    setLinkToImage("")
-
-    alert("User added")
   }
 
   return (
     <DefaultPageWrapper>
       <AddUserPageStyles>
+        {status === "loading" && <div className="info_block loading">Adding user...</div>}
+        {status === "success" && <div className="info_block">User added</div>}
+        {status === "error"
+          && <div className="info_block error">Failed to add new user: <span>{error.message}</span></div>
+        }
         <form>
           <h1>Create new user</h1>
           <input type="text"

@@ -1,6 +1,7 @@
-import React from "react"
-import {useDispatch} from "react-redux"
-import {addNewsAction} from "../../redux/newsReducer/newsActions"
+import React, {useEffect} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {addNewsAction, pendingAddNewsAction} from "../../redux/newsReducer/newsActions"
+import {addNewsSelector} from "../../redux/newsReducer/newsSelectors"
 import DefaultPageWrapper from "../DefaultPageWrapper/DefaultPageWrapper"
 import AddNewsPageStyles from "./AddNewsPageStyles"
 
@@ -11,6 +12,21 @@ const AddNewsPage = () => {
   const [text, setText] = React.useState("")
   const [imageLink, setImageLink] = React.useState("")
 
+  const {status, error} = useSelector(addNewsSelector)
+
+  useEffect(() => {
+    if (status === "success") {
+      setTitle("")
+      setText("")
+      setImageLink("")
+
+      setTimeout(() => {
+        dispatch(pendingAddNewsAction())
+      }, 2000)
+    }
+  }, [dispatch, status])
+
+
   const handleSubmit = e => {
     e.preventDefault()
     const news = {
@@ -18,19 +34,17 @@ const AddNewsPage = () => {
       text,
       imageLink,
     }
-
     dispatch(addNewsAction(news))
-    setTitle("")
-    setText("")
-    setImageLink("")
-
-    alert("News added")
   }
-
 
   return (
     <DefaultPageWrapper>
       <AddNewsPageStyles>
+        {status === "loading" && <div className="info_block loading">Adding news...</div>}
+        {status === "success" && <div className="info_block">News added</div>}
+        {status === "error"
+          && <div className="info_block error">Failed to add new news: <span>{error.message}</span></div>
+        }
         <form>
           <h1>Add news</h1>
           <input type="text"

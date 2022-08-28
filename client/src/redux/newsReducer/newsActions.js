@@ -1,60 +1,60 @@
-import {ADD_NEWS, ADD_NEWS_FAIL, GET_NEWS, GET_NEWS_FAIL, UPDATE_NEWS, UPDATE_NEWS_FAIL} from "./newsActionsTypes"
+import axios from "axios"
+import {SERVER_URL} from "../../axiosConfig"
+import {
+  ADD_NEWS,
+  ADD_NEWS_FAIL,
+  ADD_NEWS_SUCCESS,
+  GET_NEWS,
+  GET_NEWS_FAIL,
+  GET_NEWS_SUCCESS,
+  PENDING_ADD_NEWS,
+  PENDING_UPDATE_NEWS,
+  UPDATE_NEWS,
+  UPDATE_NEWS_FAIL,
+  UPDATE_NEWS_SUCCESS,
+} from "./newsActionsTypes"
 
-export const getNewsAction = () => {
-  return async dispatch => {
-    try {
-      const request = await fetch("http://localhost:8080/news")
-      const news = await request.json()
+export const getNewsAction = () => (dispatch, getState) => {
+  if (getState().newsReducer.news) return
 
-      news.forEach(user => !user.id ? user.id = user._id : null)
+  dispatch({type: GET_NEWS})
 
-      dispatch({type: GET_NEWS, payload: {news}})
-    } catch (error) {
-      dispatch({type: GET_NEWS_FAIL, payload: {error}})
-    }
-  }
+  axios.get(`${SERVER_URL}/news`)
+       .then(({data}) => ({data: data.map(news => !news.id ? {...news, id: news._id} : news)}))
+       .then(({data}) => dispatch(({type: GET_NEWS_SUCCESS, payload: {news: data}})))
+       .catch((error) => dispatch(({type: GET_NEWS_FAIL, payload: {error}})))
 }
 
-export const addNewsAction = (news) => {
-  return async dispatch => {
-    try {
-      const request = await fetch("http://localhost:8080/news", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(news)
-      })
+export const pendingAddNewsAction = () => ({type: PENDING_ADD_NEWS})
 
-      const newNews = await request.json()
+export const addNewsAction = (news) => (dispatch, getState) => {
+  dispatch({type: ADD_NEWS})
 
-      if (!newNews.id) newNews.id = newNews._id
+  if (!getState().newsReducer.news) dispatch(getNewsAction())
 
-      dispatch({type: ADD_NEWS, payload: {newNews}})
-    } catch (error) {
-      dispatch({type: ADD_NEWS_FAIL, payload: {error}})
-    }
-  }
+  axios.post(`${SERVER_URL}/news`, news, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+       .then(({data}) => ({data: {...data, id: data._id}}))
+       .then(({data}) => dispatch(({type: ADD_NEWS_SUCCESS, payload: {newNews: data}})))
+       .catch((error) => dispatch(({type: ADD_NEWS_FAIL, payload: {error}})))
 }
 
-export const updateNewsAction = (news) => {
-  return async dispatch => {
-    try {
-      const request = await fetch("http://localhost:8080/news", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(news)
-      })
+export const pendingUpdateNewsAction = () => ({type: PENDING_UPDATE_NEWS})
 
-      const newNews = await request.json()
+export const updateNewsAction = (news) => (dispatch, getState) => {
+  dispatch({type: UPDATE_NEWS})
 
-      if (!newNews.id) newNews.id = newNews._id
+  if (!getState().newsReducer.news) dispatch(getNewsAction())
 
-      dispatch({type: UPDATE_NEWS, payload: {newNews}})
-    } catch (error) {
-      dispatch({type: UPDATE_NEWS_FAIL, payload: {error}})
-    }
-  }
+  axios.put(`${SERVER_URL}/news`, news, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+       .then(({data}) => ({data: {...data, id: data._id}}))
+       .then(({data}) => dispatch(({type: UPDATE_NEWS_SUCCESS, payload: {updatedNews: data}})))
+       .catch((error) => dispatch(({type: UPDATE_NEWS_FAIL, payload: {error}})))
 }

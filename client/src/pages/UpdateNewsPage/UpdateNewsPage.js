@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {updateNewsAction} from "../../redux/newsReducer/newsActions"
-import {getNews} from "../../redux/newsReducer/newsSelectors"
+import {getNewsAction, pendingUpdateNewsAction, updateNewsAction} from "../../redux/newsReducer/newsActions"
+import {getNews, updateNewsSelector} from "../../redux/newsReducer/newsSelectors"
 import {getNewsImagesDataList} from "../AddNewsPage/AddNewsPage"
 import DefaultPageWrapper from "../DefaultPageWrapper/DefaultPageWrapper"
 import UpdateNewsPageStyles from "./UpdateNewsPageStyles"
@@ -12,26 +12,38 @@ const UpdateNewsPage = () => {
   const dispatch = useDispatch()
   const news = useSelector(getNews)
 
-  let [currentNews, setCurrentNews] = useState({
-    title: "",
-    text: "",
-    imageLink: "",
-  })
+  const [currentNews, setCurrentNews] = useState({})
 
-  const [title, setTitle] = useState(currentNews.title)
-  const [text, setText] = useState(currentNews.text)
-  const [imageLink, setImageLink] = useState(currentNews.imageLink)
+  const [title, setTitle] = useState("")
+  const [text, setText] = useState("")
+  const [imageLink, setImageLink] = useState("")
+
+  const {status, error} = useSelector(updateNewsSelector)
+
+  useEffect(() => {
+    dispatch(getNewsAction())
+  }, [dispatch])
 
   useEffect(() => {
     if (!news) return
 
     // FIXME probably bug with comparing number and string
-    setCurrentNews(news.find(item => item.id === path))
+    const currentNews0 = news.find(item => item.id === path)
 
-    setTitle(currentNews.title)
-    setText(currentNews.text)
-    setImageLink(currentNews.imageLink)
-  }, [currentNews, news, path])
+    setCurrentNews(currentNews0)
+
+    setTitle(currentNews0.title)
+    setText(currentNews0.text)
+    setImageLink(currentNews0.imageLink)
+  }, [dispatch, news, path])
+
+  useEffect(() => {
+    if (status === "success") {
+      setTimeout(() => {
+        dispatch(pendingUpdateNewsAction())
+      }, 2000)
+    }
+  }, [dispatch, status])
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -42,13 +54,16 @@ const UpdateNewsPage = () => {
       imageLink,
     }
     dispatch(updateNewsAction(newNews))
-
-    alert("News updated")
   }
 
   return (
     <DefaultPageWrapper>
       <UpdateNewsPageStyles>
+        {status === "loading" && <div className="info_block loading">Updating news...</div>}
+        {status === "success" && <div className="info_block">News updated</div>}
+        {status === "error"
+          && <div className="info_block error">Failed to update news: <span>{error.message}</span></div>
+        }
         <form>
           <h1>Update news</h1>
           <input type="text" placeholder="title" required value={title} onChange={e => setTitle(e.target.value)}/>

@@ -12,6 +12,21 @@ const NewsPageStyles = styled.div`
       margin-top: 0;
     }
   }
+  
+  .info_block {
+    padding: ${({theme}) => theme.$paddings.$primary};
+    border: 0.1rem solid ${({theme}) => theme.$backgroundColors.$primary};
+    background-color: ${({theme}) => theme.$backgroundColors.$tertiary};
+    
+    &.error {
+      border-color: ${({theme}) => theme.$textColors.$error};
+      
+      span {
+        color: ${({theme}) => theme.$textColors.$error};
+        font-style: italic;
+      }
+    }
+  }
 `
 
 export default NewsPageStyles
