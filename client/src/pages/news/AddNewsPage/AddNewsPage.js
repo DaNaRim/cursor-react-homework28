@@ -1,5 +1,6 @@
 import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
+import FormStyles from "../../../components/Form/FormStyles"
 import {addNewsAction, pendingAddNewsAction} from "../../../redux/newsReducer/newsActions"
 import {addNewsSelector} from "../../../redux/newsReducer/newsSelectors"
 import DefaultPageWrapper from "../../DefaultPageWrapper/DefaultPageWrapper"
@@ -45,7 +46,7 @@ const AddNewsPage = () => {
         {status === "error"
           && <div className="info_block error">Failed to add new news: <span>{error.message}</span></div>
         }
-        <form>
+        <FormStyles>
           <h1>Add news</h1>
           <input type="text"
                  placeholder="title"
@@ -69,7 +70,7 @@ const AddNewsPage = () => {
           {getNewsImagesDataList()}
 
           <button type="submit" onClick={handleSubmit}>Add news</button>
-        </form>
+        </FormStyles>
       </AddNewsPageStyles>
     </DefaultPageWrapper>
   )

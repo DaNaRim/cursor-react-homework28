@@ -1,5 +1,6 @@
 import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
+import FormStyles from "../../../components/Form/FormStyles"
 import {addUserAction, pendingAddUserAction} from "../../../redux/usersReducer/usersActions"
 import {addUserSelector} from "../../../redux/usersReducer/usersSelectors"
 import DefaultPageWrapper from "../../DefaultPageWrapper/DefaultPageWrapper"
@@ -42,7 +43,7 @@ const AddUserPage = () => {
         {status === "error"
           && <div className="info_block error">Failed to add new user: <span>{error.message}</span></div>
         }
-        <form>
+        <FormStyles>
           <h1>Create new user</h1>
           <input type="text"
                  placeholder="Username"
@@ -60,7 +61,7 @@ const AddUserPage = () => {
           {getUserImagesDatalist()}
 
           <button onClick={handleAddUser}>Add user</button>
-        </form>
+        </FormStyles>
       </AddUserPageStyles>
     </DefaultPageWrapper>
   )

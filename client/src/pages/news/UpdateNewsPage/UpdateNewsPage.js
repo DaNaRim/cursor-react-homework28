@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
+import FormStyles from "../../../components/Form/FormStyles"
 import {getNewsAction, pendingUpdateNewsAction, updateNewsAction} from "../../../redux/newsReducer/newsActions"
 import {getNews, updateNewsSelector} from "../../../redux/newsReducer/newsSelectors"
 import DefaultPageWrapper from "../../DefaultPageWrapper/DefaultPageWrapper"
@@ -64,7 +65,7 @@ const UpdateNewsPage = () => {
         {status === "error"
           && <div className="info_block error">Failed to update news: <span>{error.message}</span></div>
         }
-        <form>
+        <FormStyles>
           <h1>Update news</h1>
           <input type="text" placeholder="title" required value={title} onChange={e => setTitle(e.target.value)}/>
           <input type="text" placeholder="text" required value={text} onChange={e => setText(e.target.value)}/>
@@ -77,7 +78,7 @@ const UpdateNewsPage = () => {
           {getNewsImagesDataList()}
 
           <button type="submit" onClick={handleSubmit}>Update news</button>
-        </form>
+        </FormStyles>
       </UpdateNewsPageStyles>
     </DefaultPageWrapper>
   )

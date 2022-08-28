@@ -22,6 +22,8 @@ const NewsStyles = styled.div`
 
   h1 {
     font-size: ${({theme}) => theme.$fontsSize.$h1};
+    text-align: center;
+    word-break: break-all;
 
     a {
       text-decoration: none;
