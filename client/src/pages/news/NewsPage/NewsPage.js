@@ -1,9 +1,9 @@
 import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import News from "../../../../components/News/News"
-import {getNewsAction} from "../../../../redux/newsReducer/newsActions"
-import {getNews, getNewsSelector} from "../../../../redux/newsReducer/newsSelectors"
-import DefaultPageWrapper from "../../../DefaultPageWrapper/DefaultPageWrapper"
+import News from "../../../components/News/News"
+import {getNewsAction} from "../../../redux/newsReducer/newsActions"
+import {getNews, getNewsSelector} from "../../../redux/newsReducer/newsSelectors"
+import DefaultPageWrapper from "../../DefaultPageWrapper/DefaultPageWrapper"
 import NewsPageStyles from "./NewsPageStyles"
 
 const NewsPage = () => {
